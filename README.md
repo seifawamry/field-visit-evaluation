@@ -1,86 +1,80 @@
 ﻿# Field Visit Evaluation Tool
 
-A modern, responsive single-page web application built with **React**, **Vite**, and **Tailwind CSS** for evaluating pharmaceutical and medical representatives during field visits.
+A modern, responsive web application for evaluating pharmaceutical and medical representatives during field visits.
 
 ![Field Visit Evaluation](https://img.shields.io/badge/React-19-blue.svg)
 ![Vite](https://img.shields.io/badge/Vite-8-purple.svg)
 ![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-3.4-38bdf8.svg)
 ![Icons](https://img.shields.io/badge/Icons-Lucide%20React-orange.svg)
+![Mobile Ready](https://img.shields.io/badge/Mobile-Compatible-success.svg)
+
+---
+
+## How to Open and Use
+
+### Option 1: Double-Click Direct Launch (No Terminal / No Server Needed)
+You can open the app **immediately** by double-clicking:
+👉 **`field-visit-app.html`** (or `dist/index.html`)
+
+This is a 100% standalone, self-contained single-file bundle containing all React components, Tailwind styles, and Lucide icons inlined. It works in any browser (Chrome, Edge, Safari, Firefox) on laptops, tablets, and phones without running Node.js or a server, and without CORS / blank-page issues.
+
+---
+
+### Option 2: One-Click Windows Launcher (`start.bat`)
+Double-click **`start.bat`** in the project directory.
+It will:
+1. Launch the local development server with network sharing enabled (`--host`).
+2. Automatically open `http://localhost:5173` in your default browser.
+
+---
+
+### Option 3: Command Line (Developer Mode)
+
+```powershell
+# 1. Navigate to project
+cd field-visit-evaluation
+
+# 2. Start dev server
+npm run dev
+
+# 3. Build standalone production bundle
+npm run build
+```
+
+---
+
+## Mobile Compatibility
+
+The application is built and tested for mobile devices:
+- **Responsive Layout**: Adapts seamlessly to smartphone screens (360px+), tablets, and desktop displays.
+- **Touch-Friendly Controls**: 44px+ tap targets on rating buttons, large Yes/No selection pills, and smooth collapsible accordion cards.
+- **iOS Safari Optimized**: Form input font sizing is calibrated to prevent automatic unwanted iOS Safari viewport zooming.
+- **Network Sharing**: Run `start.bat` or `npm run dev -- --host` and access the tool from your phone browser via the displayed Network URL (e.g. `http://192.168.1.X:5173`).
+- **Mobile Print & Save PDF**: Generates formatted evaluation reports directly on mobile or desktop.
 
 ---
 
 ## Features
 
-- **Comprehensive 7-Part Assessment**:
-  1. **Part 1: Assessment Details** &mdash; Assessor & Rep info, titles, date, territory/governorate, and visited account types.
-  2. **Part 2: Medical Background & Product Knowledge** &mdash; Disease pathophysiology, product MoA & safety, clinical trials, handling medical inquiries.
-  3. **Part 3: Market & Competitive Intelligence** &mdash; Patient flow & purchasing power, competitor activity tracking, pharmacy stock checks & prescription rates.
-  4. **Part 4: Territory & Time Management** &mdash; Routing efficiency, briefing punctuality, call frequency targets, waiting-room vs. detailing balance.
-  5. **Part 5: Sales Call Execution** &mdash; Pre-call planning, opening statement, probing, objection handling, commitment closing, post-call CRM logging.
-  6. **Part 6: Marketing Messages & E-Detailing** &mdash; Tablet and materials readiness, strategy alignment, competitor positioning.
-  7. **Part 7: Appearance, Language & Soft Skills** &mdash; Professional dress, speech clarity, vocal pacing, non-verbal posture, HCP & clinic rapport.
-- **Action Planning**: Formulate SMART action plans for the next 30 days.
+- **7-Part Comprehensive Assessment**:
+  1. **Part 1: Assessment Details** &mdash; Assessor, Representative, titles, date, territory, and visited accounts.
+  2. **Part 2: Medical Background & Product Knowledge** &mdash; Disease pathophysiology, product MoA & safety, clinical trials, medical inquiries handling.
+  3. **Part 3: Market & Competitive Intelligence** &mdash; Market dynamics, competitor intelligence checklist, pharmacy stock checks & prescription feedback.
+  4. **Part 4: Territory and Time Management** &mdash; Routing efficiency, punctuality, call frequency targets, waiting-room vs. detailing balance.
+  5. **Part 5: Sales Call Execution** &mdash; Pre-call planning, opening statement, probing, objection handling, commitment closing, CRM logging.
+  6. **Part 6: Marketing Messages & E-Detailing** &mdash; Material readiness checklist, strategic messaging, product positioning.
+  7. **Part 7: Appearance, Language, and Soft Skills** &mdash; Professional dress, speech clarity, vocal pacing, non-verbal posture, HCP & clinic rapport.
+- **SMART 30-Day Action Plan**: Input field for structured developmental goals.
 - **Automated Scoring & Grading Engine**:
-  - Computes subscores for every category and total score out of 113.
+  - Calculates subscores for each section and total score out of 113.
   - Automatically calculates percentage and performance grading (*Exceptional*, *Exceeds Expectations*, *Meets Expectations*, or *Development Needed*).
 - **Algorithmic Qualitative Feedback**:
-  - Automatically highlights key strengths and coaching opportunities based on ratings.
+  - Automatically identifies key strengths and coaching areas based on scores.
 - **Google Sheets Integration**:
-  - Connect a Google Apps Script Web App URL to sync all evaluation entries directly into a Google Sheet in real time.
+  - Connect a Google Apps Script Web App URL to sync all submissions directly into a Google Sheet in real time.
 - **Print & PDF Export**:
-  - Clean, dedicated print CSS styles.
-  - Built-in one-click PDF generation using `html2pdf.js`.
+  - Clean print CSS styles and one-click PDF generation via `html2pdf.js`.
   - Signature blocks for Evaluator and Medical Representative.
-
----
-
-## Tech Stack
-
-- **Framework**: [React 19](https://react.dev/)
-- **Bundler & Dev Server**: [Vite](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **PDF Export**: [html2pdf.js](https://ekoopmans.github.io/html2pdf.js/)
-
----
-
-## Getting Started
-
-### Prerequisites
-
-Ensure you have **Node.js** (v18+) and **npm** installed.
-
-### Installation
-
-1. Clone or navigate to the repository folder:
-   ```bash
-   cd field-visit-evaluation
-   ```
-
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-3. Start the local development server:
-   ```bash
-   npm run dev
-   ```
-
-4. Open your browser at the URL shown (typically `http://localhost:5173`).
-
-### Production Build
-
-To build the static production files for deployment:
-```bash
-npm run build
-```
-The optimized output will be in the `dist/` directory.
-
-To preview the production build locally:
-```bash
-npm run preview
-```
 
 ---
 
@@ -88,32 +82,16 @@ npm run preview
 
 To push this project to your GitHub account:
 
-1. **Create a new empty repository** on GitHub (e.g. `field-visit-evaluation`).
-2. Run the following commands in the project root:
-   ```bash
-   # Initialize git if not already done
-   git init -b main
+```powershell
+cd field-visit-evaluation
 
-   # Stage and commit all files
-   git add .
-   git commit -m "Initial commit: Field Visit Evaluation React application"
+# Stage and commit all updates
+git add .
+git commit -m "Enhance mobile compatibility and standalone HTML support"
 
-   # Link to your remote GitHub repository
-   git remote add origin https://github.com/<your-username>/field-visit-evaluation.git
+# Add your GitHub repository as remote (replace with your repo URL)
+git remote add origin https://github.com/<your-username>/<your-repo-name>.git
 
-   # Push to main
-   git push -u origin main
-   ```
-
----
-
-## Google Sheets Integration (Optional)
-
-To automatically record evaluation results to Google Sheets:
-
-1. Create a Google Sheet named `Nutrition-Field Visit Evaluation Responses`.
-2. In Google Sheets, open **Extensions > Apps Script**.
-3. Create a `doPost(e)` function that parses JSON data and appends rows with the evaluation fields.
-4. Deploy the script as a **Web App** (Execute as: *Me*, Who has access: *Anyone*).
-5. Copy the Web App URL (`https://script.google.com/macros/s/.../exec`).
-6. Click **Google Sheet Settings** in the app header, paste the URL, and submit. The URL will be saved in your browser's local storage.
+# Push to main branch
+git push -u origin main
+```
