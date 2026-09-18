@@ -3,6 +3,7 @@ import {
   User, MapPin, Calendar, CheckSquare, ClipboardList, 
   BarChart, TrendingUp, AlertCircle, FileText, Check, Download, Printer, Menu, X, ChevronDown, ChevronUp, Send, CheckCircle2, Settings, RotateCcw, PlusCircle
 } from 'lucide-react';
+import liptisLogo from './assets/liptis-nutrition-logo.png';
 
 export const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzwPyBUZVrZnLD41bofUENg4M37dy5pnZMjn-CYSFC3FqklMKbaBQjCOtWG02Cebk8O/exec';
 
@@ -288,7 +289,7 @@ export default function FieldVisitApp() {
     setIsExportingPDF(true);
     const opt = {
       margin:       10,
-      filename:     `Nutrition_Field_Visit_${formData.repName ? formData.repName.trim().replace(/\s+/g, '_') : 'Evaluation'}.pdf`,
+      filename:     `LN_Field_Visit_${formData.repName ? formData.repName.trim().replace(/\s+/g, '_') : 'Evaluation'}.pdf`,
       image:        { type: 'jpeg', quality: 0.98 },
       html2canvas:  { scale: 2, useCORS: true, letterRendering: true },
       jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
@@ -332,11 +333,18 @@ export default function FieldVisitApp() {
   if (view === 'form') {
     return (
       <div className="min-h-screen bg-slate-100 pb-16 font-sans text-slate-800">
-        {/* Sticky Header */}
-        <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 px-3.5 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between shadow-sm">
-          <div className="min-w-0 pr-2">
-            <h1 className="text-base sm:text-xl font-bold text-slate-900 truncate">Nutrition Field Visit Evaluation</h1>
-            <p className="text-xs text-slate-500 hidden sm:block truncate">Auto-Syncing to: <span className="font-semibold text-emerald-700">Nutrition-Field Visit Evaluation Responses</span></p>
+        {/* Sticky Header with Liptis Nutrition Logo */}
+        <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between shadow-xs">
+          <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 pr-2">
+            <img 
+              src={liptisLogo} 
+              alt="Liptis Nutrition Logo" 
+              className="h-7 sm:h-9 w-auto object-contain flex-shrink-0"
+            />
+            <div className="min-w-0 border-l border-slate-200 pl-2.5 sm:pl-3">
+              <h1 className="text-sm sm:text-base md:text-lg font-bold text-slate-900 truncate leading-tight">LN Field Visit Evaluation</h1>
+              <p className="text-[11px] text-slate-500 hidden sm:block truncate">Auto-Syncing to: <span className="font-semibold text-emerald-700">Nutrition-Field Visit Evaluation Responses</span></p>
+            </div>
           </div>
           <button 
             type="button" 
@@ -349,7 +357,7 @@ export default function FieldVisitApp() {
           </button>
         </div>
 
-        <div className="max-w-4xl mx-auto px-3 sm:px-6 pt-3.5 sm:pt-8">
+        <div className="max-w-4xl mx-auto px-3 sm:px-6 pt-3.5 sm:pt-6">
           
           {/* Settings Drawer */}
           {showSettings && (
@@ -599,7 +607,7 @@ export default function FieldVisitApp() {
             <div className="pt-2 pb-12 sm:pb-16">
               <button 
                 type="submit" 
-                className="w-full bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 active:scale-[0.98] text-white font-bold py-3.5 sm:py-4 px-4 sm:px-6 rounded-xl shadow-lg transition-transform text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer touch-manipulation"
+                className="w-full bg-gradient-to-r from-blue-700 to-indigo-700 hover:from-blue-800 hover:to-indigo-800 active:scale-[0.98] text-white font-bold py-3.5 sm:py-4 px-4 sm:px-6 rounded-xl shadow-lg transition-transform text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer touch-manipulation"
               >
                 <Send size={18} /> Submit, Sync to Google Sheets & Generate Report
               </button>
@@ -664,10 +672,15 @@ export default function FieldVisitApp() {
         {/* Printable Card */}
         <div id="printable-report-card" className="bg-white shadow-xl rounded-2xl overflow-hidden print:shadow-none print:border-none print:rounded-none p-3.5 sm:p-10 space-y-5 sm:space-y-8">
           
-          {/* Header Banner */}
-          <div className="bg-gradient-to-r from-emerald-700 to-blue-600 text-white p-4 sm:p-8 rounded-xl print:bg-white print:text-black print:border-b-4 print:border-emerald-700 print:p-0 print:pb-4">
-            <h1 className="text-xl sm:text-3xl font-bold mb-1 sm:mb-2 leading-tight">Nutrition Field Visit Evaluation Report</h1>
-            <p className="text-emerald-100 print:text-slate-500 text-[11px] sm:text-sm">Synced to Google Sheet: Nutrition-Field Visit Evaluation Responses</p>
+          {/* Header Banner with Liptis Nutrition Logo */}
+          <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white p-4 sm:p-7 rounded-xl print:bg-white print:text-black print:border-b-4 print:border-blue-900 print:p-0 print:pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+            <div>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 leading-tight">LN Field Visit Evaluation Report</h1>
+              <p className="text-blue-100 print:text-slate-600 text-[11px] sm:text-xs">Liptis Nutrition &bull; Field Operations &bull; Auto-Synced to Google Sheets</p>
+            </div>
+            <div className="bg-white px-3 py-1.5 rounded-xl shadow-xs self-start sm:self-auto flex-shrink-0">
+              <img src={liptisLogo} alt="Liptis Nutrition Logo" className="h-7 sm:h-9 w-auto object-contain" />
+            </div>
           </div>
 
           {/* Details Grid */}
