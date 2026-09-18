@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { 
   User, MapPin, Calendar, CheckSquare, ClipboardList, 
-  BarChart, TrendingUp, AlertCircle, FileText, Check, Download, Printer, Menu, X, ChevronDown, ChevronUp, Send, CheckCircle2, Settings
+  BarChart, TrendingUp, AlertCircle, FileText, Check, Download, Printer, Menu, X, ChevronDown, ChevronUp, Send, CheckCircle2, Settings, RotateCcw, PlusCircle
 } from 'lucide-react';
+
+export const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzwPyBUZVrZnLD41bofUENg4M37dy5pnZMjn-CYSFC3FqklMKbaBQjCOtWG02Cebk8O/exec';
 
 const initialFormState = {
   // Part 1
@@ -22,8 +24,8 @@ const initialFormState = {
   appearance: 0, language: 0, verbal: 0, nonVerbal: 0, relationship: 0,
   // Action Plan
   actionPlan: '',
-  // Google Sheets integration configuration
-  googleSheetsWebhookUrl: ''
+  // Google Sheets integration configuration (preconfigured with permanent default)
+  googleSheetsWebhookUrl: DEFAULT_WEBHOOK_URL
 };
 
 const assessorTitles = ['Marketing Director', 'Group Product Manager', 'Senior Product Manager', 'Area/District Manager'];
@@ -121,8 +123,11 @@ export default function FieldVisitApp() {
 
     try {
       const savedWebhook = localStorage.getItem('nutrition_sheets_webhook');
-      if (savedWebhook) {
+      if (savedWebhook && savedWebhook.trim() !== '') {
         setFormData(prev => ({ ...prev, googleSheetsWebhookUrl: savedWebhook }));
+      } else {
+        localStorage.setItem('nutrition_sheets_webhook', DEFAULT_WEBHOOK_URL);
+        setFormData(prev => ({ ...prev, googleSheetsWebhookUrl: DEFAULT_WEBHOOK_URL }));
       }
     } catch (e) {
       console.warn('LocalStorage unavailable:', e);
@@ -134,13 +139,22 @@ export default function FieldVisitApp() {
       const updated = { ...prev, [field]: value };
       if (field === 'googleSheetsWebhookUrl') {
         try {
-          localStorage.setItem('nutrition_sheets_webhook', value);
+          localStorage.setItem('nutrition_sheets_webhook', value || DEFAULT_WEBHOOK_URL);
         } catch (e) {
           console.warn('LocalStorage save failed:', e);
         }
       }
       return updated;
     });
+  };
+
+  const resetWebhookToDefault = () => {
+    update('googleSheetsWebhookUrl', DEFAULT_WEBHOOK_URL);
+    try {
+      localStorage.setItem('nutrition_sheets_webhook', DEFAULT_WEBHOOK_URL);
+    } catch (e) {
+      console.warn('LocalStorage save failed:', e);
+    }
   };
 
   const toggleArray = (field, item) => {
@@ -175,7 +189,8 @@ export default function FieldVisitApp() {
   };
 
   const handleSyncToGoogleSheets = async (currentScores, calculatedStrengths, calculatedWeaknesses) => {
-    if (!formData.googleSheetsWebhookUrl) {
+    const targetWebhookUrl = formData.googleSheetsWebhookUrl || DEFAULT_WEBHOOK_URL;
+    if (!targetWebhookUrl) {
       return { success: false, message: 'No Google Apps Script Webhook URL provided.' };
     }
 
@@ -211,7 +226,7 @@ export default function FieldVisitApp() {
     };
 
     try {
-      await fetch(formData.googleSheetsWebhookUrl, {
+      await fetch(targetWebhookUrl, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -236,11 +251,28 @@ export default function FieldVisitApp() {
 
     const { strengths, weaknesses } = generateStrengthsAndWeaknesses();
 
-    if (formData.googleSheetsWebhookUrl) {
+    const targetUrl = formData.googleSheetsWebhookUrl || DEFAULT_WEBHOOK_URL;
+    if (targetUrl) {
       await handleSyncToGoogleSheets(calculatedScores, strengths, weaknesses);
     }
 
     setView('report');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleStartNewAssessment = () => {
+    setFormData(prev => ({
+      ...initialFormState,
+      assessorName: prev.assessorName,
+      assessorTitle: prev.assessorTitle,
+      territory: prev.territory,
+      date: new Date().toISOString().split('T')[0],
+      googleSheetsWebhookUrl: prev.googleSheetsWebhookUrl || DEFAULT_WEBHOOK_URL
+    }));
+    setScores(null);
+    setSyncStatus(null);
+    setSyncMessage('');
+    setView('form');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
@@ -304,7 +336,7 @@ export default function FieldVisitApp() {
         <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 px-3.5 sm:px-6 py-3 sm:py-3.5 flex items-center justify-between shadow-sm">
           <div className="min-w-0 pr-2">
             <h1 className="text-base sm:text-xl font-bold text-slate-900 truncate">Nutrition Field Visit Evaluation</h1>
-            <p className="text-xs text-slate-500 hidden sm:block truncate">Syncing to: <span className="font-semibold text-emerald-700">Nutrition-Field Visit Evaluation Responses</span></p>
+            <p className="text-xs text-slate-500 hidden sm:block truncate">Auto-Syncing to: <span className="font-semibold text-emerald-700">Nutrition-Field Visit Evaluation Responses</span></p>
           </div>
           <button 
             type="button" 
@@ -327,18 +359,31 @@ export default function FieldVisitApp() {
                   <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-600 flex-shrink-0" />
                   <span className="truncate">Google Sheets Sync Configuration</span>
                 </div>
-                <button onClick={() => setShowSettings(false)} className="text-emerald-700 hover:text-emerald-900 text-xs font-bold px-2 py-1">Close</button>
+                <button onClick={() => setShowSettings(false)} className="text-emerald-700 hover:text-emerald-900 text-xs font-bold px-2 py-1 cursor-pointer">Close</button>
               </div>
-              <p className="text-xs sm:text-sm text-emerald-800 mb-2.5 leading-relaxed">
-                Paste your Google Apps Script Web App URL below to automatically push all submissions into your Google Sheet:
+              <p className="text-xs sm:text-sm text-emerald-800 mb-2 leading-relaxed">
+                Connected Google Apps Script Web App URL (All evaluation reports are automatically sent here):
               </p>
-              <input 
-                type="url" 
-                placeholder="https://script.google.com/macros/s/.../exec"
-                value={formData.googleSheetsWebhookUrl}
-                onChange={(e) => update('googleSheetsWebhookUrl', e.target.value)}
-                className="w-full bg-white border border-emerald-300 rounded-xl p-2.5 sm:p-3 text-base sm:text-sm focus:ring-2 focus:ring-emerald-500 outline-none"
-              />
+              <div className="flex flex-col sm:flex-row gap-2">
+                <input 
+                  type="url" 
+                  placeholder="https://script.google.com/macros/s/.../exec"
+                  value={formData.googleSheetsWebhookUrl}
+                  onChange={(e) => update('googleSheetsWebhookUrl', e.target.value)}
+                  className="flex-1 bg-white border border-emerald-300 rounded-xl p-2.5 sm:p-3 text-base sm:text-sm focus:ring-2 focus:ring-emerald-500 outline-none font-mono text-xs text-slate-700"
+                />
+                <button
+                  type="button"
+                  onClick={resetWebhookToDefault}
+                  className="flex items-center justify-center gap-1.5 text-xs font-semibold text-emerald-800 bg-emerald-100 hover:bg-emerald-200 px-3 py-2 rounded-xl transition-colors cursor-pointer"
+                  title="Reset to default webhook"
+                >
+                  <RotateCcw size={13} /> Reset Default
+                </button>
+              </div>
+              <p className="text-[11px] text-emerald-700 mt-2 font-medium">
+                ✓ Default URL is permanently configured. You do not need to re-enter it when creating new submissions.
+              </p>
             </div>
           )}
 
@@ -556,7 +601,7 @@ export default function FieldVisitApp() {
                 type="submit" 
                 className="w-full bg-gradient-to-r from-emerald-600 to-blue-600 hover:from-emerald-700 hover:to-blue-700 active:scale-[0.98] text-white font-bold py-3.5 sm:py-4 px-4 sm:px-6 rounded-xl shadow-lg transition-transform text-sm sm:text-base flex items-center justify-center gap-2 cursor-pointer touch-manipulation"
               >
-                <Send size={18} /> Submit, Sync & Generate Report
+                <Send size={18} /> Submit, Sync to Google Sheets & Generate Report
               </button>
             </div>
           </form>
@@ -573,12 +618,20 @@ export default function FieldVisitApp() {
         
         {/* Navigation / Action Bar */}
         <div className="flex flex-col sm:flex-row justify-between items-stretch sm:items-center gap-2.5 sm:gap-3 mb-4 sm:mb-6 print:hidden">
-          <button 
-            onClick={() => setView('form')}
-            className="text-blue-600 hover:text-blue-800 font-medium flex items-center justify-center sm:justify-start gap-2 py-2.5 px-4 rounded-xl bg-white border border-slate-200 shadow-xs transition-colors cursor-pointer text-sm"
-          >
-            ← Back to Edit
-          </button>
+          <div className="flex items-center gap-2">
+            <button 
+              onClick={() => setView('form')}
+              className="flex-1 sm:flex-none text-blue-600 hover:text-blue-800 font-medium flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-white border border-slate-200 shadow-xs transition-colors cursor-pointer text-sm"
+            >
+              ← Back to Edit
+            </button>
+            <button 
+              onClick={handleStartNewAssessment}
+              className="flex-1 sm:flex-none text-emerald-700 hover:text-emerald-900 font-semibold flex items-center justify-center gap-1.5 py-2.5 px-4 rounded-xl bg-emerald-50 hover:bg-emerald-100 border border-emerald-200 shadow-xs transition-colors cursor-pointer text-sm"
+            >
+              <PlusCircle size={15} /> New Assessment
+            </button>
+          </div>
           
           <div className="grid grid-cols-2 sm:flex items-center gap-2 sm:gap-3">
             <button 
