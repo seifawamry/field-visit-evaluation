@@ -1,7 +1,7 @@
-﻿{
-  "name": "LN Field Visit Evaluation",
-  "short_name": "LN Field Visit Evaluation",
-  "description": "Liptis Nutrition Field Visit Evaluation Tool",
+{
+  "name": "Liptis Field Visit Evaluation",
+  "short_name": "Liptis Field Visit Evaluation",
+  "description": "Liptis Field Visit Evaluation Tool",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f8fafc",

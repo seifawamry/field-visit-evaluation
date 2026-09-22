@@ -351,7 +351,7 @@ export default function FieldVisitApp() {
               />
             </div>
             <div className="min-w-0 border-l border-slate-200 pl-2 sm:pl-3">
-              <h1 className="text-xs sm:text-base md:text-lg font-bold text-slate-900 truncate leading-tight">LN Field Visit Evaluation</h1>
+              <h1 className="text-xs sm:text-base md:text-lg font-bold text-slate-900 truncate leading-tight">Liptis Field Visit Evaluation</h1>
               <p className="text-[11px] text-slate-500 hidden md:block truncate">Auto-Syncing to: <span className="font-semibold text-emerald-700">Nutrition-Field Visit Evaluation Responses</span></p>
             </div>
           </div>
@@ -684,7 +684,7 @@ export default function FieldVisitApp() {
           {/* Header Banner with Liptis Nutrition & Liptis USA Logos */}
           <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white p-4 sm:p-7 rounded-xl print:bg-white print:text-black print:border-b-4 print:border-blue-900 print:p-0 print:pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
             <div>
-              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 leading-tight">LN Field Visit Evaluation Report</h1>
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 leading-tight">Liptis Field Visit Evaluation Report</h1>
               <p className="text-blue-100 print:text-slate-600 text-[11px] sm:text-xs">Liptis Nutrition &bull; Liptis USA &bull; Auto-Synced to Google Sheets</p>
             </div>
             <div className="bg-white px-3 py-1.5 rounded-xl shadow-xs self-start sm:self-auto flex-shrink-0 flex items-center gap-2.5">
