@@ -4,6 +4,7 @@ import {
   BarChart, TrendingUp, AlertCircle, FileText, Check, Download, Printer, Menu, X, ChevronDown, ChevronUp, Send, CheckCircle2, Settings, RotateCcw, PlusCircle
 } from 'lucide-react';
 import liptisLogo from './assets/liptis-nutrition-logo.png';
+import liptisUsaLogo from './assets/liptis-usa-logo.png';
 
 export const DEFAULT_WEBHOOK_URL = 'https://script.google.com/macros/s/AKfycbzwPyBUZVrZnLD41bofUENg4M37dy5pnZMjn-CYSFC3FqklMKbaBQjCOtWG02Cebk8O/exec';
 
@@ -333,17 +334,25 @@ export default function FieldVisitApp() {
   if (view === 'form') {
     return (
       <div className="min-h-screen bg-slate-100 pb-16 font-sans text-slate-800">
-        {/* Sticky Header with Liptis Nutrition Logo */}
-        <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 px-3 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between shadow-xs">
-          <div className="flex items-center gap-2.5 sm:gap-3.5 min-w-0 pr-2">
-            <img 
-              src={liptisLogo} 
-              alt="Liptis Nutrition Logo" 
-              className="h-7 sm:h-9 w-auto object-contain flex-shrink-0"
-            />
-            <div className="min-w-0 border-l border-slate-200 pl-2.5 sm:pl-3">
-              <h1 className="text-sm sm:text-base md:text-lg font-bold text-slate-900 truncate leading-tight">LN Field Visit Evaluation</h1>
-              <p className="text-[11px] text-slate-500 hidden sm:block truncate">Auto-Syncing to: <span className="font-semibold text-emerald-700">Nutrition-Field Visit Evaluation Responses</span></p>
+        {/* Sticky Header with Liptis Nutrition & Liptis USA Logos */}
+        <div className="sticky top-0 z-30 bg-white/95 backdrop-blur border-b border-slate-200 px-3 sm:px-6 py-2 sm:py-2.5 flex items-center justify-between shadow-xs">
+          <div className="flex items-center gap-2 sm:gap-3.5 min-w-0 pr-2">
+            <div className="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
+              <img 
+                src={liptisLogo} 
+                alt="Liptis Nutrition Logo" 
+                className="h-6 sm:h-8 w-auto object-contain flex-shrink-0"
+              />
+              <span className="text-slate-300 font-light text-sm sm:text-base select-none">|</span>
+              <img 
+                src={liptisUsaLogo} 
+                alt="Liptis USA Logo" 
+                className="h-6 sm:h-8 w-auto object-contain flex-shrink-0"
+              />
+            </div>
+            <div className="min-w-0 border-l border-slate-200 pl-2 sm:pl-3">
+              <h1 className="text-xs sm:text-base md:text-lg font-bold text-slate-900 truncate leading-tight">LN Field Visit Evaluation</h1>
+              <p className="text-[11px] text-slate-500 hidden md:block truncate">Auto-Syncing to: <span className="font-semibold text-emerald-700">Nutrition-Field Visit Evaluation Responses</span></p>
             </div>
           </div>
           <button 
@@ -672,14 +681,16 @@ export default function FieldVisitApp() {
         {/* Printable Card */}
         <div id="printable-report-card" className="bg-white shadow-xl rounded-2xl overflow-hidden print:shadow-none print:border-none print:rounded-none p-3.5 sm:p-10 space-y-5 sm:space-y-8">
           
-          {/* Header Banner with Liptis Nutrition Logo */}
+          {/* Header Banner with Liptis Nutrition & Liptis USA Logos */}
           <div className="bg-gradient-to-r from-blue-900 via-blue-800 to-indigo-900 text-white p-4 sm:p-7 rounded-xl print:bg-white print:text-black print:border-b-4 print:border-blue-900 print:p-0 print:pb-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
             <div>
               <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-1 leading-tight">LN Field Visit Evaluation Report</h1>
-              <p className="text-blue-100 print:text-slate-600 text-[11px] sm:text-xs">Liptis Nutrition &bull; Field Operations &bull; Auto-Synced to Google Sheets</p>
+              <p className="text-blue-100 print:text-slate-600 text-[11px] sm:text-xs">Liptis Nutrition &bull; Liptis USA &bull; Auto-Synced to Google Sheets</p>
             </div>
-            <div className="bg-white px-3 py-1.5 rounded-xl shadow-xs self-start sm:self-auto flex-shrink-0">
+            <div className="bg-white px-3 py-1.5 rounded-xl shadow-xs self-start sm:self-auto flex-shrink-0 flex items-center gap-2.5">
               <img src={liptisLogo} alt="Liptis Nutrition Logo" className="h-7 sm:h-9 w-auto object-contain" />
+              <div className="h-5 w-[1px] bg-slate-200"></div>
+              <img src={liptisUsaLogo} alt="Liptis USA Logo" className="h-7 sm:h-9 w-auto object-contain" />
             </div>
           </div>
 
