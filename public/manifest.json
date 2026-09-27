@@ -1,7 +1,7 @@
 {
-  "name": "Liptis Field Visit Evaluation",
-  "short_name": "Liptis Field Visit Evaluation",
-  "description": "Liptis Field Visit Evaluation Tool",
+  "name": "Liptis Nutrition Evaluation App",
+  "short_name": "Liptis Nutrition Evaluation App",
+  "description": "Liptis Nutrition Evaluation App",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#f8fafc",
